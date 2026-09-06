@@ -1,45 +1,60 @@
 import { useParams } from "react-router-dom";
 import ReactMarkdown from "react-markdown";
-import { mockPosts } from "../../data/mockData";
+import { useState, useEffect } from "react";
 
-const posts = import.meta.glob("../../blog/*.md", {
-  query: "?raw",
-
-  import: "default",
-
-  eager: true,
-});
+type Post = {
+  id: number;
+  title: string;
+  content: string;
+  created_at: string;
+};
 
 export default function PostDetailPage() {
   const { id } = useParams();
+  const [post, setPost] = useState<Post | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
-  // mockPosts에서 현재 id에 해당하는 게시글 찾기
-  const post = mockPosts.find((post) => post.id === Number(id));
+  useEffect(() => {
+    fetch(`http://localhost:3000/posts/${id}`)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("게시글을 불러오지 못했습니다.");
+        }
 
-  // 게시글이 없으면 에러 화면
+        return response.json();
+      })
+
+      .then((data) => {
+        setPost(data);
+      })
+
+      .catch((error) => {
+        setError(error.message);
+      })
+
+      .finally(() => {
+        setLoading(false);
+      });
+  }, [id]);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>{error}</div>;
+  }
+
   if (!post) {
-    return <div>Post not found</div>;
+    return <div>게시글을 찾을 수 없습니다.</div>;
   }
-
-  // Markdown 파일 찾기
-  const markdownPost = Object.entries(posts).find(([path]) =>
-    path.endsWith(`${post.id}.md`),
-  );
-
-  // Markdown 파일이 없으면 에러 화면
-  if (!markdownPost) {
-    return <div>Markdown not found</div>;
-  }
-  const markdown = markdownPost[1];
 
   return (
-    <div>
-      <div className="border border-t border-gray-200 p-6">
-        <article className="prose">
-          <p>{post.date}</p>
-          <ReactMarkdown>{markdown}</ReactMarkdown>
-        </article>
-      </div>
-    </div>
+    <article className="prose">
+      <h1>{post.title}</h1>
+      <p>{new Date(post.created_at).toLocaleDateString()}</p>
+      <ReactMarkdown>{post.content}</ReactMarkdown>
+    </article>
   );
 }
