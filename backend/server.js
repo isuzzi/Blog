@@ -1,21 +1,14 @@
 const express = require("express");
 const cors = require("cors");
-const { Pool } = require("pg");
 require("dotenv").config();
+
+const pool = require("./db");
 
 const app = express();
 const PORT = 3000;
 
 app.use(cors());
 app.use(express.json());
-
-const pool = new Pool({
-  user: "postgres",
-  host: "localhost",
-  database: "blog",
-  password: process.env.DB_PASSWORD,
-  port: 5432,
-});
 
 app.get("/", (req, res) => {
   res.send("Blog API Server");
@@ -33,6 +26,26 @@ app.get("/posts", async (req, res) => {
     console.error(error);
     res.status(500).json({
       error: "Failed to fetch posts",
+    });
+  }
+});
+
+// 게시글 작성
+app.post("/posts", async (req, res) => {
+  try {
+    const { title, content } = req.body;
+
+    const result = await pool.query(
+      "INSERT INTO posts (title, content) VALUES ($1, $2) RETURNING id, title, content, created_at",
+      [title, content],
+    );
+
+    res.status(201).json(result.rows[0]);
+  } catch (error) {
+    console.error(error);
+
+    res.status(500).json({
+      error: "Failed to create post",
     });
   }
 });
