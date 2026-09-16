@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 type Post = {
   id: number;
@@ -9,6 +9,7 @@ type Post = {
 
 export default function PostListPage() {
   const [posts, setPosts] = useState<Post[]>([]);
+  const navigate = useNavigate();
   useEffect(() => {
     fetch("http://localhost:3000/posts")
       .then((res) => {
@@ -27,6 +28,7 @@ export default function PostListPage() {
   return (
     <div>
       <h1 className="text-xl font-bold">Posts List</h1>
+      <button onClick={() => navigate("/posts/write")}>글 작성</button>
       <div className="flex flex-col gap-2 p-4">
         {posts.map((post) => (
           <Link
