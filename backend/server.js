@@ -76,6 +76,33 @@ app.get("/posts/:id", async (req, res) => {
   }
 });
 
+// 게시글 수정
+app.patch("/posts/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { title, content } = req.body;
+
+    const result = await pool.query(
+      "UPDATE posts SET title = $1, content = $2 WHERE id = $3 RETURNING id, title, content, created_at",
+      [title, content, id],
+    );
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({
+        error: "Post not found",
+      });
+    }
+
+    res.json(result.rows[0]);
+  } catch (error) {
+    console.error(error);
+
+    res.status(500).json({
+      error: "Failed to update post",
+    });
+  }
+});
+
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
 });

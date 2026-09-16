@@ -5,6 +5,7 @@ import PostDetailPage from "./posts/[id]/PostDetailPage";
 import Header from "./components/Header";
 import PostListPage from "./posts/PostListPage";
 import CreatePostPage from "./posts/CreatePostPage";
+import PostEditPage from "./posts/[id]/PostEditPage";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route path="/posts" element={<PostListPage />} />
         <Route path="/posts/new" element={<CreatePostPage />} />
         <Route path="/posts/:id" element={<PostDetailPage />} />
+        <Route path="/posts/:id/edit" element={<PostEditPage />} />
         <Route path="/about" element={<AboutPage />} />
       </Routes>
     </>
