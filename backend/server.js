@@ -132,6 +132,36 @@ app.delete("/posts/:id", async (req, res) => {
   }
 });
 
+// 게시글 작성
+app.post("/posts", async (req, res) => {
+  try {
+    const { title, content } = req.body;
+
+    if (!title || !content) {
+      return res.status(400).json({
+        message: "제목과 내용을 입력해주세요.",
+      });
+    }
+
+    const result = await pool.query(
+      `
+      INSERT INTO posts (title, content)
+      VALUES ($1, $2)
+      RETURNING *
+      `,
+      [title, content],
+    );
+
+    res.status(201).json(result.rows[0]);
+  } catch (error) {
+    console.error(error);
+
+    res.status(500).json({
+      message: "게시글 작성에 실패했습니다.",
+    });
+  }
+});
+
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
 });
