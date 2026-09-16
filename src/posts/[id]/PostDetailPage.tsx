@@ -52,13 +52,38 @@ export default function PostDetailPage() {
     return <div>게시글을 찾을 수 없습니다.</div>;
   }
 
+  const handleDelete = async () => {
+    const confirmed = window.confirm("정말 삭제하시겠습니까?");
+
+    if (!confirmed) {
+      return;
+    }
+
+    try {
+      const response = await fetch(`http://localhost:3000/posts/${id}`, {
+        method: "DELETE",
+      });
+
+      if (!response.ok) {
+        throw new Error("게시글 삭제에 실패했습니다.");
+      }
+
+      alert("게시글이 삭제되었습니다.");
+
+      navigate("/posts");
+    } catch (error) {
+      console.error(error);
+      alert("게시글 삭제에 실패했습니다.");
+    }
+  };
+
   return (
     <article className="prose">
       <h1>{post.title}</h1>
       <p>{new Date(post.created_at).toLocaleDateString()}</p>
       <div>
         <button onClick={() => navigate(`/posts/${post.id}/edit`)}>수정</button>
-        <button>삭제</button>
+        <button onClick={handleDelete}>삭제</button>
       </div>
       <ReactMarkdown>{post.content}</ReactMarkdown>
     </article>

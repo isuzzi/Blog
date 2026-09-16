@@ -103,6 +103,35 @@ app.patch("/posts/:id", async (req, res) => {
   }
 });
 
+// 게시글 삭제
+app.delete("/posts/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const result = await pool.query(
+      "DELETE FROM posts WHERE id = $1 RETURNING *",
+      [id],
+    );
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({
+        message: "게시글을 찾을 수 없습니다.",
+      });
+    }
+
+    res.json({
+      message: "게시글이 삭제되었습니다.",
+      post: result.rows[0],
+    });
+  } catch (error) {
+    console.error(error);
+
+    res.status(500).json({
+      message: "게시글 삭제에 실패했습니다.",
+    });
+  }
+});
+
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
 });
