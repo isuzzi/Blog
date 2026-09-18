@@ -42,10 +42,10 @@ export default function PostListPage() {
           <Link
             key={post.id}
             to={`/posts/${post.id}`}
-            className="grid grid-cols-[100px_1fr] gap-4 border-b border-black px-4 py-5 transition-colors hover:bg-black hover:text-white"
+            className="grid grid-cols-[120px_1fr] gap-4 border-b border-black px-4 py-5 transition-colors hover:bg-black hover:text-white"
           >
             {/* Date */}
-            <time className="text-base">
+            <time className="shrink-0 text-base whitespace-nowrap">
               {new Date(post.createdAt).toLocaleDateString("ko-KR", {
                 year: "numeric",
                 month: "2-digit",

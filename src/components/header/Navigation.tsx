@@ -6,8 +6,8 @@ const navigationItems = [
     to: "/posts",
   },
   {
-    label: "PORTFOLIO",
-    to: "/portfolio",
+    label: "PROJECT",
+    to: "/project",
   },
   {
     label: "ABOUT",

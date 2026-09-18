@@ -186,3 +186,8 @@ button {
 .post-scroll::-webkit-scrollbar-thumb:hover {
   background: #eaff00;
 }
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
