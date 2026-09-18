@@ -18,7 +18,13 @@ app.get("/", (req, res) => {
 app.get("/posts", async (req, res) => {
   try {
     const result = await pool.query(
-      "SELECT id, title, content, created_at FROM posts ORDER BY created_at DESC",
+      `SELECT 
+        id,
+        title,
+        content,
+        created_at AS "createdAt"
+       FROM posts
+       ORDER BY created_at DESC`,
     );
 
     res.json(result.rows);
@@ -30,33 +36,19 @@ app.get("/posts", async (req, res) => {
   }
 });
 
-// 게시글 작성
-app.post("/posts", async (req, res) => {
-  try {
-    const { title, content } = req.body;
-
-    const result = await pool.query(
-      "INSERT INTO posts (title, content) VALUES ($1, $2) RETURNING id, title, content, created_at",
-      [title, content],
-    );
-
-    res.status(201).json(result.rows[0]);
-  } catch (error) {
-    console.error(error);
-
-    res.status(500).json({
-      error: "Failed to create post",
-    });
-  }
-});
-
 // 게시글 상세
 app.get("/posts/:id", async (req, res) => {
   try {
     const { id } = req.params;
 
     const result = await pool.query(
-      "SELECT id, title, content, created_at FROM posts WHERE id = $1",
+      `SELECT
+        id,
+        title,
+        content,
+        created_at AS "createdAt"
+       FROM posts
+       WHERE id = $1`,
       [id],
     );
 
@@ -83,7 +75,10 @@ app.patch("/posts/:id", async (req, res) => {
     const { title, content } = req.body;
 
     const result = await pool.query(
-      "UPDATE posts SET title = $1, content = $2 WHERE id = $3 RETURNING id, title, content, created_at",
+      `UPDATE posts
+       SET title = $1, content = $2
+       WHERE id = $3
+       RETURNING id, title, content, created_at AS "createdAt"`,
       [title, content, id],
     );
 

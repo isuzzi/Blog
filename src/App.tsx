@@ -11,18 +11,21 @@ import { PortfolioPage } from "./potfolio/PortfolioPage";
 
 function App() {
   return (
-    <div className="flex min-h-dvh flex-col">
+    <div className="flex h-dvh flex-col overflow-hidden">
+      {" "}
       <Header />
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/posts" element={<PostListPage />} />
-        <Route path="/posts/new" element={<CreatePostPage />} />
-        <Route path="/posts/write" element={<PostWritePage />} />
-        <Route path="/posts/:id" element={<PostDetailPage />} />
-        <Route path="/posts/:id/edit" element={<PostEditPage />} />
-        <Route path="/portfolio" element={<PortfolioPage />} />
-        <Route path="/about" element={<AboutPage />} />
-      </Routes>
+      <div className="min-h-0 flex-1">
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/posts" element={<PostListPage />} />
+          <Route path="/posts/new" element={<CreatePostPage />} />
+          <Route path="/posts/write" element={<PostWritePage />} />
+          <Route path="/posts/:id" element={<PostDetailPage />} />
+          <Route path="/posts/:id/edit" element={<PostEditPage />} />
+          <Route path="/portfolio" element={<PortfolioPage />} />
+          <Route path="/about" element={<AboutPage />} />
+        </Routes>
+      </div>
     </div>
   );
 }
