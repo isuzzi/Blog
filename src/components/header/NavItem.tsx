@@ -10,7 +10,7 @@ export default function NavItem({ to, children }: NavItemProps) {
   return (
     <Link
       to={to}
-      className="flex items-center justify-center border-b border-black px-6 py-6 hover:bg-black hover:text-white md:border-b-0 md:border-l md:border-black md:py-6"
+      className="font-display flex items-center justify-center border-l border-black px-6 py-6 text-xl first:border-l-0 hover:bg-black hover:text-white"
     >
       {children}
     </Link>

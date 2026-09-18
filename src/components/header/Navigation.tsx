@@ -14,15 +14,14 @@ const navigationItems = [
     to: "/about",
   },
 ];
-
 export default function Navigation() {
   return (
-    <>
+    <div className="grid grid-cols-3 lg:col-span-3">
       {navigationItems.map((item) => (
         <NavItem key={item.to} to={item.to}>
           {item.label}
         </NavItem>
       ))}
-    </>
+    </div>
   );
 }
