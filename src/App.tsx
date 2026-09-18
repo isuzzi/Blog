@@ -13,7 +13,7 @@ function App() {
   return (
     <div className="flex min-h-dvh flex-col lg:h-dvh lg:overflow-hidden">
       <Header />
-      <div className="flex min-h-0 flex-1 flex-col">
+      <div className="post-scroll flex min-h-0 flex-1 flex-col overflow-y-auto">
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/posts" element={<PostListPage />} />
