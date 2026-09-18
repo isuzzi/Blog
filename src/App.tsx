@@ -4,10 +4,12 @@ import AboutPage from "./about/AboutPage";
 import PostDetailPage from "./posts/[id]/PostDetailPage";
 import Header from "./components/header/Header";
 import PostListPage from "./posts/PostListPage";
-import CreatePostPage from "./posts/CreatePostPage";
 import PostEditPage from "./posts/[id]/PostEditPage";
 import PostWritePage from "./posts/PostWritePage";
 import ProjectPage from "./project/ProjectPage";
+import AdminLoginPage from "./admin/AdminLoginPage";
+import ProtectedRoute from "./components/auth/ProtextedRoute";
+import LogoutPage from "./pages/LogoutPage";
 
 function App() {
   return (
@@ -17,12 +19,18 @@ function App() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/posts" element={<PostListPage />} />
-          <Route path="/posts/new" element={<CreatePostPage />} />
-          <Route path="/posts/write" element={<PostWritePage />} />
           <Route path="/posts/:id" element={<PostDetailPage />} />
-          <Route path="/posts/:id/edit" element={<PostEditPage />} />
+
+          {/* 관리자 전용 */}
+
+          <Route element={<ProtectedRoute />}>
+            <Route path="/posts/write" element={<PostWritePage />} />
+            <Route path="/posts/:id/edit" element={<PostEditPage />} />
+          </Route>
           <Route path="/project" element={<ProjectPage />} />
           <Route path="/about" element={<AboutPage />} />
+          <Route path="/admin/login" element={<AdminLoginPage />} />
+          <Route path="/logout" element={<LogoutPage />} />
         </Routes>
       </div>
     </div>
