@@ -7,22 +7,24 @@ import PostListPage from "./posts/PostListPage";
 import CreatePostPage from "./posts/CreatePostPage";
 import PostEditPage from "./posts/[id]/PostEditPage";
 import PostWritePage from "./posts/PostWritePage";
-import { PortfolioPage } from "./potfolio/PortfolioPage";
+import ProjectPage from "./project/ProjectPage";
 
 function App() {
   return (
-    <div className="flex min-h-dvh flex-col">
+    <div className="flex min-h-dvh flex-col lg:h-dvh lg:overflow-hidden">
       <Header />
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/posts" element={<PostListPage />} />
-        <Route path="/posts/new" element={<CreatePostPage />} />
-        <Route path="/posts/write" element={<PostWritePage />} />
-        <Route path="/posts/:id" element={<PostDetailPage />} />
-        <Route path="/posts/:id/edit" element={<PostEditPage />} />
-        <Route path="/portfolio" element={<PortfolioPage />} />
-        <Route path="/about" element={<AboutPage />} />
-      </Routes>
+      <div className="post-scroll flex min-h-0 flex-1 flex-col overflow-y-auto">
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/posts" element={<PostListPage />} />
+          <Route path="/posts/new" element={<CreatePostPage />} />
+          <Route path="/posts/write" element={<PostWritePage />} />
+          <Route path="/posts/:id" element={<PostDetailPage />} />
+          <Route path="/posts/:id/edit" element={<PostEditPage />} />
+          <Route path="/project" element={<ProjectPage />} />
+          <Route path="/about" element={<AboutPage />} />
+        </Routes>
+      </div>
     </div>
   );
 }
