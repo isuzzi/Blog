@@ -68,13 +68,15 @@ export default function PostListPage() {
       </section>
 
       {/* Write Button */}
-      <button
-        type="button"
-        onClick={() => navigate("/posts/write")}
-        className="bg-primary shrink-0 py-4 text-xl text-white transition-colors hover:bg-black"
-      >
-        글쓰기
-      </button>
+      {localStorage.getItem("token") && (
+        <button
+          type="button"
+          onClick={() => navigate("/posts/write")}
+          className="bg-primary shrink-0 py-4 text-xl text-white transition-colors hover:bg-black"
+        >
+          글쓰기
+        </button>
+      )}
     </main>
   );
 }

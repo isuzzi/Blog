@@ -15,10 +15,13 @@ export default function PostWritePage() {
     }
 
     try {
+      const token = localStorage.getItem("token");
+
       const response = await fetch("http://localhost:3000/posts", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
           title,
