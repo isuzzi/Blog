@@ -10,6 +10,10 @@ export default function PostWritePage() {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
+    if (!title.trim() || !content.trim()) {
+      return;
+    }
+
     try {
       const response = await fetch("http://localhost:3000/posts", {
         method: "POST",
@@ -26,9 +30,7 @@ export default function PostWritePage() {
         throw new Error("게시글 작성에 실패했습니다.");
       }
 
-      const data = await response.json();
-
-      console.log("작성된 게시글:", data);
+      await response.json();
 
       navigate("/posts");
     } catch (error) {
@@ -36,30 +38,61 @@ export default function PostWritePage() {
     }
   };
 
+  const handleCancel = () => {
+    navigate("/posts");
+  };
+
   return (
-    <div className="p-4">
-      <h1 className="mb-4 text-xl font-bold">글 작성</h1>
+    <main className="flex min-h-[calc(100vh-178px)] flex-col">
+      <div className="flex-1 px-12 pt-12 pb-12">
+        {/* 제목 */}
+        <h1 className="text-4xl font-black tracking-[-0.05em]">게시글 쓰기</h1>
 
-      <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-        <input
-          type="text"
-          placeholder="제목"
-          value={title}
-          onChange={(event) => setTitle(event.target.value)}
-          className="rounded border p-2"
-        />
+        {/* 구분선 */}
+        <div className="mt-12" />
 
-        <textarea
-          placeholder="내용"
-          value={content}
-          onChange={(event) => setContent(event.target.value)}
-          className="min-h-60 rounded border p-2"
-        />
+        <form onSubmit={handleSubmit} className="mt-8 flex flex-col gap-7">
+          {/* 게시글 제목 */}
+          <input
+            type="text"
+            placeholder="게시글 제목을 입력해주세요"
+            value={title}
+            onChange={(event) => setTitle(event.target.value)}
+            className="h-[68px] w-full rounded-lg border border-black bg-transparent px-5 text-lg outline-none placeholder:text-gray-400 focus:ring-0"
+          />
 
-        <button type="submit" className="rounded bg-black px-4 py-2 text-white">
-          작성
+          {/* 게시글 내용 */}
+          <textarea
+            placeholder="게시글 내용을 입력해주세요"
+            value={content}
+            onChange={(event) => setContent(event.target.value)}
+            className="min-h-[390px] w-full resize-none rounded-lg border border-black bg-transparent px-5 py-5 text-lg leading-6 outline-none placeholder:text-gray-400 focus:ring-0"
+          />
+        </form>
+      </div>
+
+      {/* 하단 버튼 */}
+      <div className="grid grid-cols-2">
+        <button
+          type="submit"
+          onClick={() => {
+            document
+              .querySelector<HTMLFormElement>("main form")
+              ?.requestSubmit();
+          }}
+          className="bg-primary hover:bg-primary py-4 text-xl font-medium text-white transition-colors"
+        >
+          글쓰기
         </button>
-      </form>
-    </div>
+
+        <button
+          type="button"
+          onClick={handleCancel}
+          className="bg-black py-4 text-xl font-medium text-white transition-colors hover:bg-black"
+        >
+          취소
+        </button>
+      </div>
+    </main>
   );
 }
