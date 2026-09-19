@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { API_URL } from "../../constants/api";
 
 type Post = {
   id: number;
@@ -17,7 +18,7 @@ export default function PostEditPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch(`http://localhost:3000/posts/${id}`)
+    fetch(`${API_URL}/posts/${id}`)
       .then((response) => {
         if (!response.ok) {
           throw new Error("게시글을 불러오지 못했습니다.");
@@ -45,10 +46,13 @@ export default function PostEditPage() {
     }
 
     try {
-      const response = await fetch(`http://localhost:3000/posts/${id}`, {
+      const token = localStorage.getItem("accessToken");
+
+      const response = await fetch(`${API_URL}/posts/${id}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
           title,
