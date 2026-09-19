@@ -64,29 +64,41 @@ https://github.com/isuzzi/Blog
 
 ### Frontend
 
-| Technology     | Usage                  |
-| -------------- | ---------------------- |
-| React          | UI 개발                |
-| TypeScript     | 타입 안정성            |
-| Vite           | 개발 서버 및 빌드      |
-| React Router   | 페이지 라우팅          |
-| React Markdown | Markdown 콘텐츠 렌더링 |
-| Tailwind CSS   | 스타일링               |
-| ESLint         | 코드 품질 관리         |
-| Prettier       | 코드 포맷팅            |
+| Technology                   | Usage                     |
+| ---------------------------- | ------------------------- |
+| React                        | UI 개발                   |
+| TypeScript                   | 타입 안정성               |
+| Vite                         | 개발 서버 및 빌드         |
+| React Router                 | SPA 라우팅                |
+| React Markdown               | Markdown 콘텐츠 렌더링    |
+| Tailwind CSS                 | 스타일링                  |
+| Tailwind Typography          | Markdown 본문 typography  |
+| @tailwindcss/vite            | Tailwind CSS의 Vite 통합  |
+| ESLint                       | 코드 품질 관리            |
+| Prettier                     | 코드 포맷팅               |
+| Prettier Tailwind CSS Plugin | Tailwind 클래스 자동 정렬 |
 
 ### Backend
 
-| Technology | Usage                    |
-| ---------- | ------------------------ |
-| Node.js    | 서버 런타임              |
-| Express    | REST API 서버            |
-| PostgreSQL | 게시글 데이터 저장       |
-| pg         | PostgreSQL 연결          |
-| JWT        | 관리자 인증              |
-| bcrypt     | 비밀번호 검증            |
-| CORS       | 프론트엔드 API 접근 허용 |
-| dotenv     | 환경 변수 관리           |
+| Technology | Usage                        |
+| ---------- | ---------------------------- |
+| Node.js    | 서버 런타임                  |
+| Express    | REST API 서버                |
+| PostgreSQL | 게시글 데이터 저장           |
+| pg         | PostgreSQL 연결 및 쿼리 실행 |
+| JWT        | 관리자 인증                  |
+| bcrypt     | 비밀번호 해싱 및 검증        |
+| CORS       | 프론트엔드 API 접근 허용     |
+| dotenv     | 환경 변수 관리               |
+
+### Development Tools
+
+| Technology        | Usage                                      |
+| ----------------- | ------------------------------------------ |
+| ESLint Plugins    | React Hooks 및 Fast Refresh 관련 코드 검사 |
+| TypeScript ESLint | TypeScript 코드 정적 분석                  |
+| Vite React Plugin | Vite에서 React 지원                        |
+| Git / GitHub      | 버전 관리 및 소스 코드 관리                |
 
 ### Deployment
 
