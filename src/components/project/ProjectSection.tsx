@@ -17,7 +17,7 @@ const projects = [
 
 export default function ProjectSection() {
   return (
-    <section className="grid min-h-0 grid-cols-1 border-t md:grid-cols-2">
+    <section className="grid min-h-0 grid-cols-1 border-t md:grid-cols-2 md:border-b lg:border-b-0">
       {projects.map((project, index) => (
         <div
           key={project.title}
