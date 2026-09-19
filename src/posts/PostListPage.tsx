@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { API_URL } from "../constants/api";
+import LoadingSpinner from "../components/LoadingSpinner";
 
 type Post = {
   id: number;
@@ -11,22 +12,37 @@ type Post = {
 
 export default function PostListPage() {
   const [posts, setPosts] = useState<Post[]>([]);
+
+  const [loading, setLoading] = useState(true);
+
   const navigate = useNavigate();
 
   useEffect(() => {
     fetch(`${API_URL}/posts`)
       .then((res) => {
         console.log("응답 상태:", res.status);
+
         return res.json();
       })
+
       .then((data) => {
         console.log("받은 데이터:", data);
+
         setPosts(data);
       })
+
       .catch((error) => {
         console.error("게시글을 불러오지 못했습니다.", error);
+      })
+
+      .finally(() => {
+        setLoading(false);
       });
   }, []);
+
+  if (loading) {
+    return <LoadingSpinner />;
+  }
 
   return (
     <main className="flex h-full min-h-0 flex-col">
