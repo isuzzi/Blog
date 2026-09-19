@@ -10,10 +10,10 @@ const authMiddleware = require("./middleware/authMiddleware");
 
 const app = express();
 
-const PORT = process.env.PORT || 8080;
+const port = process.env.PORT || 8080;
 
-app.listen(PORT, "0.0.0.0", () => {
-  console.log(`Server running on port ${PORT}`);
+app.listen(port, "0.0.0.0", () => {
+  console.log(`Server running on port ${port}`);
 });
 
 app.use(cors());
