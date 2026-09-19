@@ -10,6 +10,7 @@ import ProjectPage from "./project/ProjectPage";
 import AdminLoginPage from "./admin/AdminLoginPage";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
 import LogoutPage from "./pages/LogoutPage";
+import UnauthorizedPage from "./unauthorized/UnauthorizedPage";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
           <Route path="/about" element={<AboutPage />} />
           <Route path="/admin/login" element={<AdminLoginPage />} />
           <Route path="/logout" element={<LogoutPage />} />
+          <Route path="/unauthorized" element={<UnauthorizedPage />} />
           {/* 관리자 전용 */}
           <Route element={<ProtectedRoute />}>
             <Route path="/posts/write" element={<PostWritePage />} />
