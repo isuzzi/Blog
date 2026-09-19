@@ -1,5 +1,8 @@
 import { useEffect, useState } from "react";
 import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+import { materialDark } from "react-syntax-highlighter/dist/esm/styles/prism";
 import { useNavigate, useParams } from "react-router-dom";
 import { API_URL } from "../../constants/api";
 import LoadingSpinner from "../../components/LoadingSpinner";
@@ -104,7 +107,7 @@ export default function PostDetailPage() {
             POST
           </h1>
 
-          <div className="mt-9 border-t border-black pt-7">
+          <div className="mt-9 border-y border-black py-7">
             <div className="flex items-center gap-8">
               <time className="text-lg">{formattedDate}</time>
               <h2 className="text-2xl font-semibold">{post.title}</h2>
@@ -112,9 +115,37 @@ export default function PostDetailPage() {
           </div>
         </header>
 
-        <div className="mt-7 border-t border-black pt-5 [&_h1]:mb-5 [&_h1]:text-3xl [&_h1]:font-bold [&_h2]:mb-4 [&_h2]:text-2xl [&_h2]:font-bold [&_h3]:mb-3 [&_h3]:text-xl [&_h3]:font-bold [&_li]:mb-1 [&_ol]:mb-4 [&_ol]:list-decimal [&_ol]:pl-6 [&_p]:mb-4 [&_strong]:font-bold [&_ul]:mb-4 [&_ul]:list-disc [&_ul]:pl-6">
-          <ReactMarkdown>{post.content}</ReactMarkdown>
-        </div>
+        <article className="prose prose-neutral prose-headings:font-bold prose-headings:tracking-tight prose-headings:text-neutral-900 prose-h1:text-3xl prose-h2:mt-12 prose-h2:mb-4 prose-h2:text-2xl prose-h3:text-xl prose-p:leading-8 prose-p:text-neutral-700 prose-li:my-1 prose-li:text-neutral-700 prose-strong:text-neutral-900 prose-a:text-primary prose-a:underline hover:prose-a:underline prose-img:rounded-xl prose-hr:my-10 prose-hr:border-neutral-200 prose-blockquote:border-l-4 prose-blockquote:border-neutral-300 prose-blockquote:font-normal prose-blockquote:not-italic prose-blockquote:text-neutral-600 prose-code:rounded-sm prose-code:bg-neutral-200 prose-code:p-1 prose-code:text-[0.875em] prose-code:font-medium prose-code:text-rose-600 prose-code:before:content-none prose-code:after:content-none prose-th:font-medium prose-pre:bg-transparent prose-pre:p-0 prose-pre:m-0 mt-2 max-w-none border-neutral-200 pt-10 break-keep">
+          <ReactMarkdown
+            remarkPlugins={[remarkGfm]}
+            components={{
+              code({ className, children, ...props }) {
+                const match = /language-(\w+)/.exec(className || "");
+
+                return match ? (
+                  <SyntaxHighlighter
+                    language={match[1]}
+                    style={materialDark}
+                    PreTag="div"
+                    customStyle={{
+                      margin: 0,
+                      padding: "1.25rem",
+                      borderRadius: "0.75rem",
+                    }}
+                  >
+                    {String(children).replace(/\n$/, "")}
+                  </SyntaxHighlighter>
+                ) : (
+                  <code className={className} {...props}>
+                    {children}
+                  </code>
+                );
+              },
+            }}
+          >
+            {post.content}
+          </ReactMarkdown>
+        </article>
 
         <div className="mt-14 border-t border-black" />
       </article>
