@@ -8,7 +8,7 @@ import PostEditPage from "./posts/[id]/PostEditPage";
 import PostWritePage from "./posts/PostWritePage";
 import ProjectPage from "./project/ProjectPage";
 import AdminLoginPage from "./admin/AdminLoginPage";
-import ProtectedRoute from "./components/auth/ProtextedRoute";
+import ProtectedRoute from "./components/auth/ProtectedRoute";
 import LogoutPage from "./pages/LogoutPage";
 
 function App() {
@@ -20,17 +20,15 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/posts" element={<PostListPage />} />
           <Route path="/posts/:id" element={<PostDetailPage />} />
-
-          {/* 관리자 전용 */}
-
-          <Route element={<ProtectedRoute />}>
-            <Route path="/posts/write" element={<PostWritePage />} />
-            <Route path="/posts/:id/edit" element={<PostEditPage />} />
-          </Route>
           <Route path="/project" element={<ProjectPage />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="/admin/login" element={<AdminLoginPage />} />
           <Route path="/logout" element={<LogoutPage />} />
+          {/* 관리자 전용 */}
+          <Route element={<ProtectedRoute />}>
+            <Route path="/posts/write" element={<PostWritePage />} />
+            <Route path="/posts/:id/edit" element={<PostEditPage />} />
+          </Route>
         </Routes>
       </div>
     </div>
