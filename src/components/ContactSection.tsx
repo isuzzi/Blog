@@ -24,7 +24,7 @@ const contacts: Contact[] = [
 
 export default function ContactSection() {
   return (
-    <section className="border-b border-black p-10 md:border-t">
+    <section className="border-t-0 border-b border-black p-10">
       <h2 className="mb-4 text-2xl font-bold">CONTACT</h2>
 
       <div className="flex flex-col gap-2">
