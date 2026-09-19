@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import ReactMarkdown from "react-markdown";
 import { useNavigate, useParams } from "react-router-dom";
 import { API_URL } from "../../constants/api";
+import LoadingSpinner from "../../components/LoadingSpinner";
 
 type Post = {
   id: number;
@@ -41,7 +42,7 @@ export default function PostDetailPage() {
   }, [id]);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <LoadingSpinner />;
   }
 
   if (error) {

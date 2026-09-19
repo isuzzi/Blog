@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { API_URL } from "../../constants/api";
+import LoadingSpinner from "../../components/LoadingSpinner";
 
 type Post = {
   id: number;
@@ -73,11 +74,7 @@ export default function PostEditPage() {
   };
 
   if (loading) {
-    return (
-      <main className="flex min-h-[calc(100vh-178px)] items-center justify-center">
-        Loading...
-      </main>
-    );
+    return <LoadingSpinner />;
   }
 
   return (
