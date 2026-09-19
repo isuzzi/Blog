@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { API_URL } from "../constants/api";
 
 export default function PostWritePage() {
   const navigate = useNavigate();
@@ -15,9 +16,9 @@ export default function PostWritePage() {
     }
 
     try {
-      const token = localStorage.getItem("token");
+      const token = localStorage.getItem("accessToken");
 
-      const response = await fetch("http://localhost:3000/posts", {
+      const response = await fetch(`${API_URL}/posts`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

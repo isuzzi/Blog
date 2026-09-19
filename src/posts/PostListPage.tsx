@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { API_URL } from "../constants/api";
 
 type Post = {
   id: number;
@@ -13,7 +14,7 @@ export default function PostListPage() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch("http://localhost:3000/posts")
+    fetch(`${API_URL}/posts`)
       .then((res) => {
         console.log("응답 상태:", res.status);
         return res.json();
@@ -68,7 +69,7 @@ export default function PostListPage() {
       </section>
 
       {/* Write Button */}
-      {localStorage.getItem("token") && (
+      {localStorage.getItem("accessToken") && (
         <button
           type="button"
           onClick={() => navigate("/posts/write")}
