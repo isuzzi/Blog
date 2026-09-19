@@ -9,13 +9,18 @@ const pool = require("./db");
 const authMiddleware = require("./middleware/authMiddleware");
 
 const app = express();
-const PORT = 3000;
 
 app.use(cors());
 app.use(express.json());
 
 app.get("/", (req, res) => {
   res.send("Blog API Server");
+});
+
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, "0.0.0.0", () => {
+  console.log(`Server running on port ${PORT}`);
 });
 
 //로그인
@@ -214,8 +219,4 @@ app.post("/posts", authMiddleware, async (req, res) => {
       message: "게시글 작성에 실패했습니다.",
     });
   }
-});
-
-app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
 });
