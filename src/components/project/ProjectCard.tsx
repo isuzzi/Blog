@@ -12,7 +12,7 @@ export default function ProjectCard({
   projectUrl,
 }: ProjectCardProps) {
   return (
-    <article className="flex min-h-[174px] items-center justify-between px-10 py-8">
+    <article className="flex min-h-[174px] items-center justify-between border-b-0 border-black px-10 py-8 sm:border-b md:border-b-0">
       <div>
         <p className="text-sm">{description}</p>
 

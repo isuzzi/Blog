@@ -191,3 +191,195 @@ button {
     opacity: 0;
   }
 }
+.glitch {
+  position: relative;
+  display: inline-block;
+
+  font-size: clamp(100px, 20vw, 240px);
+  line-height: 0.75;
+  font-weight: 900;
+  letter-spacing: -12px;
+}
+
+/* 기본 403 */
+.glitch-text {
+  position: relative;
+  display: block;
+}
+
+/* RGB 분리 레이어 */
+.glitch-layer {
+  position: absolute;
+  inset: 0;
+
+  display: block;
+
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* 왼쪽으로 튀는 레이어 */
+.glitch-red {
+  color: #ff0055;
+}
+
+/* 오른쪽으로 튀는 레이어 */
+.glitch-blue {
+  color: #00ffff;
+}
+
+/* 글리치 실행 */
+.glitch-active .glitch-text {
+  animation: glitch-main 450ms steps(4, end);
+}
+
+.glitch-active .glitch-red {
+  opacity: 0.8;
+  animation: glitch-red 450ms steps(4, end);
+}
+
+.glitch-active .glitch-blue {
+  opacity: 0.8;
+  animation: glitch-blue 450ms steps(4, end);
+}
+
+/* 메인 숫자 */
+@keyframes glitch-main {
+  0% {
+    transform: translate(0);
+  }
+
+  15% {
+    transform: translate(-6px, 2px);
+  }
+
+  30% {
+    transform: translate(5px, -2px);
+  }
+
+  45% {
+    transform: translate(-3px, 1px);
+  }
+
+  60% {
+    transform: translate(4px, 0);
+  }
+
+  75% {
+    transform: translate(-2px, -1px);
+  }
+
+  100% {
+    transform: translate(0);
+  }
+}
+
+/* 왼쪽 RGB 레이어 */
+@keyframes glitch-red {
+  0% {
+    transform: translate(0);
+    clip-path: inset(0 0 70% 0);
+  }
+
+  20% {
+    transform: translate(-12px, 2px);
+    clip-path: inset(15% 0 50% 0);
+  }
+
+  40% {
+    transform: translate(8px, -3px);
+    clip-path: inset(55% 0 20% 0);
+  }
+
+  60% {
+    transform: translate(-5px, 1px);
+    clip-path: inset(30% 0 40% 0);
+  }
+
+  80% {
+    transform: translate(10px, 0);
+    clip-path: inset(70% 0 5% 0);
+  }
+
+  100% {
+    transform: translate(0);
+    clip-path: inset(0);
+  }
+}
+
+/* 오른쪽 RGB 레이어 */
+@keyframes glitch-blue {
+  0% {
+    transform: translate(0);
+    clip-path: inset(60% 0 10% 0);
+  }
+
+  20% {
+    transform: translate(10px, -2px);
+    clip-path: inset(5% 0 65% 0);
+  }
+
+  40% {
+    transform: translate(-8px, 3px);
+    clip-path: inset(45% 0 25% 0);
+  }
+
+  60% {
+    transform: translate(6px, 0);
+    clip-path: inset(15% 0 55% 0);
+  }
+
+  80% {
+    transform: translate(-10px, 1px);
+    clip-path: inset(65% 0 10% 0);
+  }
+
+  100% {
+    transform: translate(0);
+    clip-path: inset(0);
+  }
+}
+
+/* 스캔라인 */
+.glitch-scanline {
+  position: absolute;
+  left: -5%;
+  right: -5%;
+  top: 0;
+
+  height: 4px;
+
+  background: black;
+
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* 스캔라인 실행 */
+.glitch-active .glitch-scanline {
+  animation: scanline 450ms linear;
+}
+
+@keyframes scanline {
+  0% {
+    top: 0%;
+    opacity: 0;
+  }
+
+  15% {
+    opacity: 0.8;
+  }
+
+  50% {
+    opacity: 0.5;
+  }
+
+  85% {
+    opacity: 0.8;
+  }
+
+  100% {
+    top: 100%;
+    opacity: 0;
+  }
+}

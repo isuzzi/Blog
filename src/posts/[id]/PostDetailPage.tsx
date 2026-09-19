@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import ReactMarkdown from "react-markdown";
 import { useNavigate, useParams } from "react-router-dom";
 import { API_URL } from "../../constants/api";
+import LoadingSpinner from "../../components/LoadingSpinner";
 
 type Post = {
   id: number;
@@ -17,6 +18,8 @@ export default function PostDetailPage() {
   const [post, setPost] = useState<Post | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+
+  const isAdmin = !!localStorage.getItem("accessToken");
 
   useEffect(() => {
     fetch(`${API_URL}/posts/${id}`)
@@ -39,7 +42,7 @@ export default function PostDetailPage() {
   }, [id]);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <LoadingSpinner />;
   }
 
   if (error) {
@@ -79,6 +82,15 @@ export default function PostDetailPage() {
     }
   };
 
+  const handleEdit = () => {
+    if (!isAdmin) {
+      alert("권한이 없습니다.");
+      return;
+    }
+
+    navigate(`/posts/${post.id}/edit`);
+  };
+
   const formattedDate = new Date(post.createdAt)
     .toISOString()
     .slice(0, 10)
@@ -86,16 +98,15 @@ export default function PostDetailPage() {
 
   return (
     <main className="flex h-full flex-1 flex-col border-x border-black">
-      {/* 게시글 영역 */}
       <article className="post-scroll min-h-0 flex-1 overflow-y-auto px-9 py-8 text-[15px] leading-[1.25] tracking-[-0.02em]">
         <header>
           <h1 className="font-display text-4xl font-black tracking-tight">
             POST
           </h1>
+
           <div className="mt-9 border-t border-black pt-7">
             <div className="flex items-center gap-8">
               <time className="text-lg">{formattedDate}</time>
-
               <h2 className="text-2xl font-semibold">{post.title}</h2>
             </div>
           </div>
@@ -108,25 +119,27 @@ export default function PostDetailPage() {
         <div className="mt-14 border-t border-black" />
       </article>
 
-      {/* 하단 버튼 */}
       <div className="shrink-0">
-        <div className="grid grid-cols-2 border-t border-black">
-          <button
-            type="button"
-            onClick={() => navigate(`/posts/${post.id}/edit`)}
-            className="border-r border-black py-4 text-xl font-medium hover:bg-black hover:text-white"
-          >
-            수정
-          </button>
+        {/* 관리자 전용 버튼 */}
+        {isAdmin && (
+          <div className="grid grid-cols-2 border-t border-black">
+            <button
+              type="button"
+              onClick={handleEdit}
+              className="border-r border-black py-4 text-xl font-medium hover:bg-black hover:text-white"
+            >
+              수정
+            </button>
 
-          <button
-            type="button"
-            onClick={handleDelete}
-            className="py-4 text-xl font-medium hover:bg-black hover:text-white"
-          >
-            삭제
-          </button>
-        </div>
+            <button
+              type="button"
+              onClick={handleDelete}
+              className="py-4 text-xl font-medium hover:bg-black hover:text-white"
+            >
+              삭제
+            </button>
+          </div>
+        )}
 
         <button
           type="button"
